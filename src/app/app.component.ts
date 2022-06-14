@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { SomeEvent } from './common/interfaces';
+import { LoopService } from './services/loop.service';
 
 @Component({
   selector: 'app-root',
@@ -9,12 +10,16 @@ import { SomeEvent } from './common/interfaces';
 export class AppComponent {
   event!: SomeEvent;
 
+  constructor(
+    private loopService: LoopService
+  ) {}
+
   onClickSyncEvent() {
     this.event = {
       text: "Some sync event",
       type: "sync"
-    }
-    console.log(this.event)
+    };
+    this.loopService.addSyncEvent(this.event);
   }
 
   onClickAsyncEvent() {
@@ -22,7 +27,5 @@ export class AppComponent {
       text: "Some async event",
       type: "async"
     }
-
-    console.log(this.event)
   }
 }

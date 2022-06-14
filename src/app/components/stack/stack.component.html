@@ -1,9 +1,13 @@
 <div class="stack-container">
     <h2>Stack</h2>
-    <ul *ngIf="collection.length" class="events-list">
-        <li *ngFor="let event of collection">
-            {{event.text}} 
+    <ul *ngIf="collection.length; else noEvents" class="events-list">
+        <li *ngFor="let event of collection; let idx = index" class="events-list-item">
+          <strong>{{idx+1}}</strong>  {{event.text}}
             {{event.type}}
         </li>
     </ul>
 </div>
+
+<ng-template #noEvents>
+    <p>No events in the stack yet</p>
+</ng-template>
