@@ -1,0 +1,9 @@
+<div class="web-api-container">
+    <h2>Web API</h2>
+    <ul *ngIf="collection.length" class="events-list">
+        <li *ngFor="let event of collection">
+            {{event.text}} 
+            {{event.type}}
+        </li>
+    </ul>
+</div>

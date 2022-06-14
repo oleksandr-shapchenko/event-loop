@@ -1,0 +1,20 @@
+.stack-container {
+    padding: 15px;
+    width: 300px;
+    height: 250px;
+    background-color: coral;
+    overflow-y: scroll;
+}
+.events-list {
+    display: flex;
+    flex-direction: column-reverse;
+    &-item {
+       text-align: center;
+       padding-top: 10px;
+       padding-bottom: 10px;
+        border: 1px dotted #000;
+        &:not(:last-child) {
+            margin-top: 10px;
+        }
+    }
+}

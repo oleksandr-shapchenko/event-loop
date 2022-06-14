@@ -1,0 +1,30 @@
+header {
+    width: 100%;
+    background-color: #000;
+    color: #f4f4f4;
+}
+.container {
+    width: 1200px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.nav-container {
+    width: 300px;
+    padding: 15px;
+    border: 1px dotted rgb(71, 18, 71);
+    &-title {
+        margin-bottom: 15px;
+    }
+    &-buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+.loop-container {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    display: flex;
+    width: 80%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
