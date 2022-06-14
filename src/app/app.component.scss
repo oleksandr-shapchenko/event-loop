@@ -1,0 +1,10 @@
+header {
+    width: 100%;
+}
+.container {
+    width: 1200px;
+    padding: 15px;
+    &-title {
+       text-align: center;
+    }
+}
