@@ -16,3 +16,23 @@ html, ::before, ::after {
 h1, h2, h3, p {
     margin: 0;
 }
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 3px;
+    border: none;
+    outline: none;
+    background-color: rgb(71, 18, 71);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    &:hover, &:focus {
+        color: rgb(71, 18, 71);
+        border: 1px solid rgb(71, 18, 71);
+        background-color: #fff;
+        transition: all 3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+    
+}
