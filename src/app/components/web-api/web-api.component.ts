@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { SomeEvent } from 'src/app/common/interfaces';
 
 @Component({
   selector: 'app-web-api',
   templateUrl: './web-api.component.html',
   styleUrls: ['./web-api.component.scss']
 })
-export class WebApiComponent implements OnInit {
+export class WebApiComponent {
+  collection: Array<SomeEvent> = [];
+  @Input() event!: SomeEvent;
 
-  constructor() { }
+    add(event: SomeEvent) {
+        this.collection.push(event);
+    }
 
-  ngOnInit(): void {
-  }
-
+    delete() {
+        this.collection.pop();
+    }
 }

@@ -10,7 +10,6 @@ header {
 }
 .nav-container {
     width: 300px;
-    height: 70px;
     padding: 15px;
     border: 1px dotted rgb(71, 18, 71);
     &-title {
@@ -20,4 +19,12 @@ header {
         display: flex;
         justify-content: space-between;
     }
+}
+.loop-container {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    display: flex;
+    width: 80%;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
