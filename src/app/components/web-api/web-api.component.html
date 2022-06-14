@@ -1,9 +1,11 @@
 <div class="web-api-container">
     <h2>Web API</h2>
-    <ul *ngIf="collection.length" class="events-list">
-        <li *ngFor="let event of collection">
+    <ul *ngIf="collection.length; else noEvents" class="events-list">
+        <li *ngFor="let event of collection" class="events-list-item">
             {{event.text}} 
-            {{event.type}}
         </li>
     </ul>
 </div>
+<ng-template #noEvents>
+    <p>No events in the webAPI yet</p>
+</ng-template>

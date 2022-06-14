@@ -1,20 +1,19 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SomeEvent } from 'src/app/common/interfaces';
+import { LoopService } from 'src/app/services/loop.service';
 
 @Component({
   selector: 'app-web-api',
   templateUrl: './web-api.component.html',
   styleUrls: ['./web-api.component.scss']
 })
-export class WebApiComponent {
+export class WebApiComponent implements OnInit {
   collection: Array<SomeEvent> = [];
-  @Input() event!: SomeEvent;
-
-    add(event: SomeEvent) {
-        this.collection.push(event);
-    }
-
-    delete() {
-        this.collection.pop();
-    }
+  constructor(
+    private loopService: LoopService
+  ) {}
+  
+  ngOnInit(): void {
+   this.collection = this.loopService.web;
+  }
 }

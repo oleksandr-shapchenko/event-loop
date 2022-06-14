@@ -9,15 +9,31 @@ export class LoopService {
   web: Array<SomeEvent> = [];
   queue: Array<SomeEvent> = [];
 
-  addSyncEvent(event: SomeEvent) {
+  push(event: SomeEvent) {
     this.stack.unshift(event);
-    this.removeSyncEvent();
     return this.stack;
   }
 
-  removeSyncEvent() {
+  pop() {
     setTimeout(() => {
       this.stack.pop();
-    },3000)
+    },4000)
+  }
+
+  pushAsyncEvent(event: SomeEvent) {
+    this.push(event);
+    setTimeout(() => {
+      this.stack.splice(0, 1);
+      this.web.push(event);
+    }, 1000);
+    setTimeout(() => {
+      this.web.pop();
+      this.queue.push(event)
+    }, 3000);
+    setTimeout(() => {
+      this.queue.pop();
+      this.push(event);
+      this.pop();
+    }, 4000)
   }
 }

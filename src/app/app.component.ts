@@ -19,13 +19,15 @@ export class AppComponent {
       text: "Some sync event",
       type: "sync"
     };
-    this.loopService.addSyncEvent(this.event);
+    this.loopService.push(this.event);
+    this.loopService.pop();
   }
 
   onClickAsyncEvent() {
     this.event = {
       text: "Some async event",
       type: "async"
-    }
+    };
+    this.loopService.pushAsyncEvent(this.event);
   }
 }
