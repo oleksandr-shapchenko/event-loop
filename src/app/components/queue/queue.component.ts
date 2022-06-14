@@ -1,25 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SomeEvent } from 'src/app/common/interfaces';
+import { LoopService } from 'src/app/services/loop.service';
 
 @Component({
   selector: 'app-queue',
   templateUrl: './queue.component.html',
   styleUrls: ['./queue.component.scss']
 })
-export class QueueComponent {
+export class QueueComponent implements OnInit{
     collection: Array<SomeEvent> = [];
-    @Input() event!: SomeEvent;
-    
-    enqueue(event: SomeEvent) {
-    this.collection.push(event);
-  }
-  
-  dequeue() {
-   return this.collection.shift();
-  }
-  
-  size() {
-    return this.collection.length;
-  }
-
+    constructor(
+      private loopService: LoopService
+    ) {}
+    ngOnInit(): void {
+      this.collection = this.loopService.queue;
+    }
 }

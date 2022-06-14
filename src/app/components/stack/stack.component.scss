@@ -7,14 +7,12 @@
 }
 .events-list {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     &-item {
        text-align: center;
        padding-top: 10px;
        padding-bottom: 10px;
         border: 1px dotted #000;
-        &:not(:last-child) {
             margin-top: 10px;
-        }
     }
 }
