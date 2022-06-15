@@ -3,14 +3,14 @@
     height: 250px;
     padding: 15px;
     background-color: chocolate;
+    overflow-y: scroll;
 }
 .events-list {
     display: flex;
     flex-direction: column;
     &-item {
        text-align: center;
-       padding-top: 10px;
-       padding-bottom: 10px;
+       padding: 10px 15px;
         border: 1px dotted #000;
             margin-top: 10px;
     }

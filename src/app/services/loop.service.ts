@@ -28,12 +28,12 @@ export class LoopService {
     }, 1000);
     setTimeout(() => {
       this.web.pop();
-      this.queue.push(event)
+      this.queue.push(event);
     }, 3000);
     setTimeout(() => {
-      this.queue.pop();
+      this.queue.splice(0, 1);
       this.push(event);
       this.pop();
-    }, 4000)
+    }, 4500);
   }
 }
