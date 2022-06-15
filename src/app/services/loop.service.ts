@@ -31,11 +31,9 @@ export class LoopService {
       this.queue.push(event);
     }, 3000);
     setTimeout(() => {
-      this.queue.pop();
-      if(this.stack.length === 0) {
+      this.queue.splice(0, 1);
       this.push(event);
       this.pop();
-      }
     }, 4500);
   }
 }
