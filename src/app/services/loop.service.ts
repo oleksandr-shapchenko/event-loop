@@ -9,19 +9,19 @@ export class LoopService {
   web: Array<SomeEvent> = [];
   queue: Array<SomeEvent> = [];
 
-  push(event: SomeEvent) {
+  pushSyncEvent(event: SomeEvent) {
     this.stack.unshift(event);
     return this.stack;
   }
 
-  pop() {
+  popSyncEvent() {
     setTimeout(() => {
       this.stack.pop();
     },4000)
   }
 
   pushAsyncEvent(event: SomeEvent) {
-    this.push(event);
+    this.pushSyncEvent(event);
     setTimeout(() => {
       this.stack.splice(0, 1);
       this.web.push(event);
@@ -32,8 +32,8 @@ export class LoopService {
     }, 3000);
     setTimeout(() => {
       this.queue.splice(0, 1);
-      this.push(event);
-      this.pop();
+      this.pushSyncEvent(event);
+      this.popSyncEvent();
     }, 4500);
   }
 }

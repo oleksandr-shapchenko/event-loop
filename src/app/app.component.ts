@@ -1,4 +1,4 @@
-import { Component, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { SomeEvent } from './common/interfaces';
 import { LoopService } from './services/loop.service';
 
@@ -19,8 +19,8 @@ export class AppComponent {
       text: "Some sync event",
       type: "sync"
     };
-    this.loopService.push(this.event);
-    this.loopService.pop();
+    this.loopService.pushSyncEvent(this.event);
+    this.loopService.popSyncEvent();
   }
 
   onClickAsyncEvent() {

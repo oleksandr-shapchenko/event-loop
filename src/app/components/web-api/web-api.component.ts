@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SomeEvent } from 'src/app/common/interfaces';
 import { LoopService } from 'src/app/services/loop.service';
 
