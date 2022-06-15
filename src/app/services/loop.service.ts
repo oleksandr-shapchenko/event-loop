@@ -32,8 +32,10 @@ export class LoopService {
     }, 3000);
     setTimeout(() => {
       this.queue.pop();
+      if(this.stack.length === 0) {
       this.push(event);
       this.pop();
-    }, 4000)
+      }
+    }, 4000);
   }
 }
