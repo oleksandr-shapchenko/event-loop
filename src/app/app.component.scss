@@ -31,3 +31,21 @@ header {
     flex-wrap: wrap;
     justify-content: space-between;
 }
+
+.stack-container {
+    flex-basis: 300px;
+    height: 300px;
+    padding: 20px;
+    background-color: coral;
+    overflow-y: scroll;
+    &-list-item {
+        text-align: center;
+        border: 1px dotted #000;
+        background-color: beige;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+    }
+}

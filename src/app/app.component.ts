@@ -22,7 +22,6 @@ export class AppComponent {
       type: "sync"
     };
     this.stackList = this.loopService.addSyncEvent(this.event);
-    console.log(this.stackList);
   }
 
   onClickAsyncEvent() {

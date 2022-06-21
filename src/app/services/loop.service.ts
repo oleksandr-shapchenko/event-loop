@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { timer } from 'rxjs';
 import { LoopEvent } from '../common/interfaces';
 import { Queue } from '../structures/queue/queue';
 
@@ -9,12 +10,20 @@ import { WebApi } from '../structures/web-api/web-api';
   providedIn: 'root'
 })
 export class LoopService {
-  public stack = new Stack();
-  public web = new WebApi();
-  public queue = new Queue();
+  private stack = new Stack();
+  private web = new WebApi();
+  private queue = new Queue();
 
   addSyncEvent(event: LoopEvent) {
     this.stack.push(event);
+    this.removeSyncEvent();
     return this.stack.collection;
+  }
+  
+  private removeSyncEvent() {
+    timer(4000).subscribe(() => {
+      this.stack.pop();
+      return this.stack.collection;
+    })
   }
 }
