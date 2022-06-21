@@ -10,10 +10,9 @@ import { LoopService } from './services/loop.service';
 })
 export class AppComponent {
   event: LoopEvent | undefined;
-  stackList: Array<LoopEvent> = [];
 
   constructor(
-    private loopService: LoopService
+    public loopService: LoopService
   ) {}
 
   onClickSyncEvent() {
@@ -21,7 +20,7 @@ export class AppComponent {
       text: "Some sync event",
       type: "sync"
     };
-    this.stackList = this.loopService.addSyncEvent(this.event);
+    this.loopService.handleSyncEvent(this.event);
   }
 
   onClickAsyncEvent() {
@@ -29,6 +28,6 @@ export class AppComponent {
       text: "Some async event",
       type: "async"
     };
-    console.log(this.event)
+    this.loopService.handleAsyncEvent(this.event);
   }
 }

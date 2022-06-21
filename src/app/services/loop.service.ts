@@ -10,20 +10,40 @@ import { WebApi } from '../structures/web-api/web-api';
   providedIn: 'root'
 })
 export class LoopService {
-  private stack = new Stack();
-  private web = new WebApi();
-  private queue = new Queue();
+  public stack = new Stack();
+  public web = new WebApi();
+  public queue = new Queue();
 
-  addSyncEvent(event: LoopEvent) {
+  handleSyncEvent(event: LoopEvent) {
     this.stack.push(event);
     this.removeSyncEvent();
-    return this.stack.collection;
   }
   
   private removeSyncEvent() {
-    timer(4000).subscribe(() => {
+    timer(5500).subscribe(() => {
       this.stack.pop();
-      return this.stack.collection;
     })
   }
+
+  handleAsyncEvent(event: LoopEvent) {
+    this.stack.push(event);
+    this.removeAsyncEvent();
+    timer(1000).subscribe(() => {
+      this.handleEventInWebApi(event);
+    })
+  }
+
+  private removeAsyncEvent() {
+    timer(1000).subscribe(() => {
+      this.stack.collection.shift();
+    })
+  }
+
+  private handleEventInWebApi(event: LoopEvent) {
+    this.web.add(event);
+    timer(2000).subscribe(() => {
+      this.web.remove();
+    })
+  }
+
 }
