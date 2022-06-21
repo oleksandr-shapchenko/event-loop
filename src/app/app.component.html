@@ -13,9 +13,13 @@
       </div>
     </div>
     <div class="loop-container">
-      <app-stack></app-stack>
-     <app-web-api></app-web-api>
-     <app-queue></app-queue>
+      <div class="stack-container">
+        <h2>Stack</h2>
+        <ul class="stack-container-list">
+          <li *ngFor="let item of stackList" class="stack-container-list-item">{{item.text}}</li>
+        </ul>
+        <p *ngIf="!stackList.length">No events in the stack yet</p>
+      </div>
     </div>
   </div>
 </main>

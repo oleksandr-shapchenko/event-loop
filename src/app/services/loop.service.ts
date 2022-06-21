@@ -1,39 +1,29 @@
 import { Injectable } from '@angular/core';
-import { SomeEvent } from '../common/interfaces';
+import { timer } from 'rxjs';
+import { LoopEvent } from '../common/interfaces';
+import { Queue } from '../structures/queue/queue';
+
+import { Stack } from '../structures/stack/stack';
+import { WebApi } from '../structures/web-api/web-api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoopService {
-  stack: Array<SomeEvent> = [];
-  web: Array<SomeEvent> = [];
-  queue: Array<SomeEvent> = [];
+  private stack = new Stack();
+  private web = new WebApi();
+  private queue = new Queue();
 
-  push(event: SomeEvent) {
-    this.stack.unshift(event);
-    return this.stack;
+  addSyncEvent(event: LoopEvent) {
+    this.stack.push(event);
+    this.removeSyncEvent();
+    return this.stack.collection;
   }
-
-  pop() {
-    setTimeout(() => {
+  
+  private removeSyncEvent() {
+    timer(4000).subscribe(() => {
       this.stack.pop();
-    },4000)
-  }
-
-  pushAsyncEvent(event: SomeEvent) {
-    this.push(event);
-    setTimeout(() => {
-      this.stack.splice(0, 1);
-      this.web.push(event);
-    }, 1000);
-    setTimeout(() => {
-      this.web.pop();
-      this.queue.push(event);
-    }, 3000);
-    setTimeout(() => {
-      this.queue.splice(0, 1);
-      this.push(event);
-      this.pop();
-    }, 4500);
+      return this.stack.collection;
+    })
   }
 }

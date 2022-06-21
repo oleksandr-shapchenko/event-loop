@@ -3,11 +3,13 @@ header {
     background-color: #000;
     color: #f4f4f4;
 }
+
 .container {
     width: 1200px;
     padding: 15px;
     margin: 0 auto;
 }
+
 .nav-container {
     width: 300px;
     padding: 15px;
@@ -20,6 +22,7 @@ header {
         justify-content: space-between;
     }
 }
+
 .loop-container {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -27,4 +30,22 @@ header {
     width: 80%;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+
+.stack-container {
+    flex-basis: 300px;
+    height: 300px;
+    padding: 20px;
+    background-color: coral;
+    overflow-y: scroll;
+    &-list-item {
+        text-align: center;
+        border: 1px dotted #000;
+        background-color: beige;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+    }
 }
