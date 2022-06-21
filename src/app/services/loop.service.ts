@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import { timer } from 'rxjs';
 
 import { LoopEvent } from '../common/interfaces';
@@ -14,7 +15,7 @@ export class LoopService {
   public web = new WebApi();
   public queue = new Queue();
 
-  handleSyncEvent(event: LoopEvent) {
+  public handleSyncEvent(event: LoopEvent) {
     this.stack.push(event);
     this.removeSyncEvent();
   }
@@ -25,7 +26,7 @@ export class LoopService {
     })
   }
 
-  handleAsyncEvent(event: LoopEvent) {
+  public handleAsyncEvent(event: LoopEvent) {
     this.stack.push(event);
     this.removeAsyncEvent();
     timer(1000).subscribe(() => {

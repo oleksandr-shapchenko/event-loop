@@ -1,1 +1,1 @@
-export type TypeOfLoopEvent = "sync" | "async";
+export type TypeOfLoopEvent = 'sync' | 'async';

@@ -1,4 +1,4 @@
-import { LoopEvent } from "src/app/common/interfaces";
+import { LoopEvent } from 'src/app/common/interfaces';
 
 export class WebApi {
   public collection: Array<LoopEvent> = [];
