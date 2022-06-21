@@ -49,3 +49,12 @@ header {
         }
     }
 }
+
+.web-container {
+    flex-basis: 600px;
+    height: 300px;
+    padding: 300px;
+    overflow-y: scroll;
+    background-color: darkorange;
+    padding: 20px;
+}
