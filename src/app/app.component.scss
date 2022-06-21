@@ -39,11 +39,11 @@ header {
     background-color: coral;
     overflow-y: scroll;
     &-list-item {
+        height: 40px;
         text-align: center;
         border: 1px dotted #000;
         background-color: beige;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding: 10px;
         &:not(:last-child) {
             margin-bottom: 10px;
         }
@@ -57,4 +57,15 @@ header {
     overflow-y: scroll;
     background-color: darkorange;
     padding: 20px;
+}
+
+.queue-container {
+    flex-basis: 100%;
+    background-color: brown;
+    height: 120px;
+    padding: 20px;
+    margin-top: 20px;
+    &-list {
+        display: flex;
+    }
 }
