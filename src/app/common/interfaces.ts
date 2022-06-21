@@ -1,6 +1,6 @@
-import { Type } from "./types";
+import { TypeOfLoopEvent } from "./types";
 
-export interface SomeEvent {
+export interface LoopEvent {
     text: string,
-    type: Type,
+    type: TypeOfLoopEvent,
 }
