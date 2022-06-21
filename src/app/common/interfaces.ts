@@ -1,4 +1,4 @@
-import { TypeOfLoopEvent } from "./types";
+import { TypeOfLoopEvent } from './types';
 
 export interface LoopEvent {
     text: string,

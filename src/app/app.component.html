@@ -16,9 +16,23 @@
       <div class="stack-container">
         <h2>Stack</h2>
         <ul class="stack-container-list">
-          <li *ngFor="let item of stackList" class="stack-container-list-item">{{item.text}}</li>
+          <li *ngFor="let item of loopService.stack.collection" class="loop-container-list-item">{{item.text}}</li>
         </ul>
-        <p *ngIf="!stackList.length">No events in the stack yet</p>
+        <p *ngIf="!loopService.stack.collection.length">No events in the stack yet</p>
+      </div>
+      <div class="web-container">
+        <h2>WebAPI</h2>
+        <ul class="web-container-list">
+          <li *ngFor="let item of loopService.web.collection" class="loop-container-list-item">{{item.text}}</li>
+        </ul>
+        <p *ngIf="!loopService.web.collection.length">No events in the WebAPI yet</p>
+      </div>
+      <div class="queue-container">
+        <h2>Queue</h2>
+        <ul class="queue-container-list">
+          <li *ngFor="let item of loopService.queue.collection" class="loop-container-list-item">{{item.text}}</li>
+        </ul>
+        <p *ngIf="!loopService.queue.collection.length">No events in the Queue yet</p>
       </div>
     </div>
   </div>

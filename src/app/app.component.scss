@@ -30,6 +30,16 @@ header {
     width: 80%;
     flex-wrap: wrap;
     justify-content: space-between;
+    &-list-item {
+        height: 40px;
+        text-align: center;
+        border: 1px dotted #000;
+        background-color: beige;
+        padding: 10px;
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+    }
 }
 
 .stack-container {
@@ -38,14 +48,26 @@ header {
     padding: 20px;
     background-color: coral;
     overflow-y: scroll;
-    &-list-item {
-        text-align: center;
-        border: 1px dotted #000;
-        background-color: beige;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        &:not(:last-child) {
-            margin-bottom: 10px;
-        }
+}
+
+.web-container {
+    flex-basis: 600px;
+    height: 300px;
+    padding: 300px;
+    overflow-y: scroll;
+    background-color: darkorange;
+    padding: 20px;
+}
+
+.queue-container {
+    flex-basis: 100%;
+    background-color: brown;
+    height: 120px;
+    padding: 20px;
+    margin-top: 20px;
+    overflow-x: scroll;
+    &-list {
+        display: flex;
+        justify-content: space-around;
     }
 }

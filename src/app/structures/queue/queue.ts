@@ -1,4 +1,4 @@
-import { LoopEvent } from "src/app/common/interfaces";
+import { LoopEvent } from 'src/app/common/interfaces';
 
 export class Queue {
   public collection: Array<LoopEvent> = [];

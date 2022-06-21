@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+
 import { timer } from 'rxjs';
+
 import { LoopEvent } from '../common/interfaces';
 import { Queue } from '../structures/queue/queue';
-
 import { Stack } from '../structures/stack/stack';
 import { WebApi } from '../structures/web-api/web-api';
 
@@ -10,20 +11,52 @@ import { WebApi } from '../structures/web-api/web-api';
   providedIn: 'root'
 })
 export class LoopService {
-  private stack = new Stack();
-  private web = new WebApi();
-  private queue = new Queue();
+  public stack = new Stack();
+  public web = new WebApi();
+  public queue = new Queue();
 
-  addSyncEvent(event: LoopEvent) {
+  public handleSyncEvent(event: LoopEvent) {
     this.stack.push(event);
     this.removeSyncEvent();
-    return this.stack.collection;
   }
   
   private removeSyncEvent() {
-    timer(4000).subscribe(() => {
+    timer(5500).subscribe(() => {
       this.stack.pop();
-      return this.stack.collection;
+    })
+  }
+
+  public handleAsyncEvent(event: LoopEvent) {
+    this.stack.push(event);
+    this.removeAsyncEvent();
+    timer(1000).subscribe(() => {
+      this.handleEventInWebApi(event);
+    });
+    timer(3000).subscribe(() => {
+      this.handleEventInQueue(event);
+    });
+    timer(5000).subscribe(() => {
+      this.handleSyncEvent(event);
+    })
+  }
+
+  private removeAsyncEvent() {
+    timer(1000).subscribe(() => {
+      this.stack.collection.shift();
+    })
+  }
+
+  private handleEventInWebApi(event: LoopEvent) {
+    this.web.add(event);
+    timer(2000).subscribe(() => {
+      this.web.remove();
+    })
+  }
+
+  private handleEventInQueue(event: LoopEvent) {
+    this.queue.enqueue(event);
+    timer(2000).subscribe(() => {
+      this.queue.dequeue();
     })
   }
 }

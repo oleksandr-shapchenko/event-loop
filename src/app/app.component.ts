@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { LoopEvent } from './common/interfaces';
 
+import { LoopEvent } from './common/interfaces';
 import { LoopService } from './services/loop.service';
 
 @Component({
@@ -10,25 +10,24 @@ import { LoopService } from './services/loop.service';
 })
 export class AppComponent {
   event: LoopEvent | undefined;
-  stackList: Array<LoopEvent> = [];
 
   constructor(
-    private loopService: LoopService
+    public loopService: LoopService
   ) {}
 
   onClickSyncEvent() {
     this.event = {
-      text: "Some sync event",
-      type: "sync"
+      text: 'Some sync event',
+      type: 'sync'
     };
-    this.stackList = this.loopService.addSyncEvent(this.event);
+    this.loopService.handleSyncEvent(this.event);
   }
 
   onClickAsyncEvent() {
     this.event = {
-      text: "Some async event",
-      type: "async"
+      text: 'Some async event',
+      type: 'async'
     };
-    console.log(this.event)
+    this.loopService.handleAsyncEvent(this.event);
   }
 }
