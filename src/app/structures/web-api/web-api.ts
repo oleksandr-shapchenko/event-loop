@@ -3,12 +3,12 @@ import { LoopEvent } from 'src/app/common/interfaces';
 export class WebApi {
   public collection: Array<LoopEvent> = [];
 
-  add(el: LoopEvent) {
+  public add(el: LoopEvent) {
     this.collection.push(el);
     return this.collection;
   }
 
-  remove() {
+  public remove() {
     this.collection.pop();
   }
 }
