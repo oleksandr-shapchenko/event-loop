@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { timer } from 'rxjs';
+import { from, interval, Observable, of, switchMap, timer } from 'rxjs';
 
 import { LoopEvent } from '../common/interfaces';
 import { Queue } from '../structures/queue/queue';
@@ -26,37 +26,37 @@ export class LoopService {
     })
   }
 
-  public handleAsyncEvent(event: LoopEvent) {
-    this.stack.push(event);
-    this.removeAsyncEvent();
-    timer(1000).subscribe(() => {
-      this.handleEventInWebApi(event);
-    });
-    timer(3000).subscribe(() => {
-      this.handleEventInQueue(event);
-    });
-    timer(5000).subscribe(() => {
-      this.handleSyncEvent(event);
-    })
+  public handleAsyncEvent() {
+    return interval(2000).pipe(
+      
+    )
   }
 
-  private removeAsyncEvent() {
-    timer(1000).subscribe(() => {
-      this.stack.collection.shift();
-    })
+  private handleAsyncInStack(event: LoopEvent) {
+    const source = () => {
+      this.stack.push(event);
+      timer(1000).subscribe(() => this.stack.collection.shift())
+    }
+    return of(source);
   }
 
   private handleEventInWebApi(event: LoopEvent) {
-    this.web.add(event);
-    timer(2000).subscribe(() => {
-      this.web.remove();
-    })
+    const source = () => {
+      this.web.add(event);
+      timer(2000).subscribe(() => {
+        this.web.remove();
+      });
+    }
+    return of(source);
   }
 
   private handleEventInQueue(event: LoopEvent) {
-    this.queue.enqueue(event);
-    timer(2000).subscribe(() => {
+    const source = () => {
+      this.queue.enqueue(event);
+      timer(2000).subscribe(() => {
       this.queue.dequeue();
     })
+    }
+    return of(source);
   }
 }

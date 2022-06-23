@@ -28,6 +28,6 @@ export class AppComponent {
       text: 'Some async event',
       type: 'async'
     };
-    this.loopService.handleAsyncEvent(this.event);
+    this.loopService.handleAsyncEvent().subscribe(() => {})
   }
 }
