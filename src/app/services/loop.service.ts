@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { from, interval, Observable, of, switchMap, timer } from 'rxjs';
+import { of, switchMap, timer } from 'rxjs';
 
 import { LoopEvent } from '../common/interfaces';
 import { Queue } from '../structures/queue/queue';
@@ -26,16 +26,21 @@ export class LoopService {
     })
   }
 
-  public handleAsyncEvent() {
-    return interval(2000).pipe(
-      
-    )
-  }
+  public handleAsyncEvent(event: LoopEvent) {
+    return this.handleAsyncInStack(event).pipe(
+      switchMap(() => {
+        this.handleEventInWebApi(event);
+        this.handleEventInQueue(event);
+        return this.handleAsyncInStack(event);
+      }))
+    }
 
   private handleAsyncInStack(event: LoopEvent) {
     const source = () => {
       this.stack.push(event);
-      timer(1000).subscribe(() => this.stack.collection.shift())
+      timer(2000).subscribe(() => {
+        this.stack.collection.shift();
+      })
     }
     return of(source);
   }
