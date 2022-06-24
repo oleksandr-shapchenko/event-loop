@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { of, switchMap, timer } from 'rxjs';
+import { concatMap, of, switchMap, timer } from 'rxjs';
 
 import { LoopEvent } from '../common/interfaces';
 import { Queue } from '../structures/queue/queue';
@@ -16,14 +16,11 @@ export class LoopService {
   public queue = new Queue();
 
   public handleSyncEvent(event: LoopEvent) {
-    this.stack.push(event);
-    this.removeSyncEvent();
-  }
-  
-  private removeSyncEvent() {
-    timer(5500).subscribe(() => {
+    const sourse = () => {
+      this.stack.push(event);
       this.stack.pop();
-    })
+    }
+    return of(sourse);
   }
 
   public handleAsyncEvent(event: LoopEvent) {
@@ -38,23 +35,19 @@ export class LoopService {
           return this.handleAsyncInStack(event);
         }))
       }
-
-  private handleAsyncInStack(event: LoopEvent) {
-    const source = () => {
-      this.stack.push(event);
-      timer(2000).subscribe(() => {
-        this.stack.collection.shift();
-      })
+      
+    private handleAsyncInStack(event: LoopEvent) {
+      const source = () => {
+        this.stack.push(event);
+        this.stack.pop();
+      }
+      return of(source)
     }
-    return of(source);
-  }
 
   private handleEventInWebApi(event: LoopEvent) {
     const source = () => {
       this.web.add(event);
-      timer(2000).subscribe(() => {
         this.web.remove();
-      });
     }
     return of(source);
   }
@@ -62,9 +55,7 @@ export class LoopService {
   private handleEventInQueue(event: LoopEvent) {
     const source = () => {
       this.queue.enqueue(event);
-      timer(2000).subscribe(() => {
       this.queue.dequeue();
-    })
     }
     return of(source);
   }
