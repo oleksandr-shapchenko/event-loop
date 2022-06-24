@@ -29,11 +29,15 @@ export class LoopService {
   public handleAsyncEvent(event: LoopEvent) {
     return this.handleAsyncInStack(event).pipe(
       switchMap(() => {
-        this.handleEventInWebApi(event);
-        this.handleEventInQueue(event);
-        return this.handleAsyncInStack(event);
-      }))
-    }
+        return this.handleEventInWebApi(event);
+      }),
+        switchMap(() => {
+          return this.handleEventInQueue(event);
+        }),
+          switchMap(() => {
+          return this.handleAsyncInStack(event);
+        }))
+      }
 
   private handleAsyncInStack(event: LoopEvent) {
     const source = () => {
