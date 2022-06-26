@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { concatMap, of, switchMap, timer } from 'rxjs';
+import { of, switchMap } from 'rxjs';
 
 import { LoopEvent } from '../common/interfaces';
 import { Queue } from '../structures/queue/queue';
@@ -47,7 +47,7 @@ export class LoopService {
   private handleEventInWebApi(event: LoopEvent) {
     const source = () => {
       this.web.add(event);
-        this.web.remove();
+      this.web.remove();
     }
     return of(source);
   }
