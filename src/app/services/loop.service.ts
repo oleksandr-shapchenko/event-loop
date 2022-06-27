@@ -19,8 +19,8 @@ export class LoopService {
     return of(this.stack.push(event)).pipe(
       delay(3500),
       tap(() => this.stack.pop())
-      )
-    }
+    )
+  }
     
   public handleAsyncEvent(event: LoopEvent): Observable<LoopEvent[]> {
     return this.placeAsyncInStack(event).pipe(
@@ -32,27 +32,28 @@ export class LoopService {
       }),
       switchMap(() => {
         return this.placeAsyncInStack(event);
-      }))
-    }
+      })
+    )
+  }
     
   private placeAsyncInStack(event: LoopEvent): Observable<LoopEvent[]> {
     return of(this.stack.push(event)).pipe(
       delay(1000),
       tap(() => this.stack.pop())
-      )
-    }
+    )
+  }
     
   private placeEventInWebApi(event: LoopEvent): Observable<LoopEvent[]> {
     return of(this.web.add(event)).pipe(
       delay(2000),
       tap(() => this.web.remove())
-      )
-    }
+    )
+  }
     
   private placeEventInQueue(event: LoopEvent): Observable<LoopEvent[]> {
     return of(this.queue.enqueue(event)).pipe(
       delay(2000),
       tap(() => this.queue.dequeue())
-      )
-    }
+    )
   }
+}
