@@ -20,7 +20,7 @@ export class AppComponent {
       text: 'Some sync event',
       type: 'sync'
     };
-    this.loopService.handleSyncEvent(this.event);
+    this.loopService.handleSyncEvent(this.event).subscribe(() => {})
   }
 
   onClickAsyncEvent() {

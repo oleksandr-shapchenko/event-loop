@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { of, switchMap } from 'rxjs';
+import { delay, delayWhen, of, switchMap, tap } from 'rxjs';
 
 import { LoopEvent } from '../common/interfaces';
 import { Queue } from '../structures/queue/queue';
@@ -16,12 +16,11 @@ export class LoopService {
   public queue = new Queue();
 
   public handleSyncEvent(event: LoopEvent) {
-    const sourse = () => {
-      this.stack.push(event);
-      this.stack.pop();
+    return of(this.stack.push(event)).pipe(
+      delay(2000),
+      tap(() => this.stack.pop())
+    )
     }
-    return of(sourse);
-  }
 
   public handleAsyncEvent(event: LoopEvent) {
     return this.handleAsyncInStack(event).pipe(
@@ -37,26 +36,23 @@ export class LoopService {
       }
       
     private handleAsyncInStack(event: LoopEvent) {
-      const source = () => {
-        this.stack.push(event);
-        this.stack.pop();
+      return of(this.stack.push(event)).pipe(
+        delay(2000),
+        tap(() => this.stack.pop())
+      )
       }
-      return of(source)
-    }
 
   private handleEventInWebApi(event: LoopEvent) {
-    const source = () => {
-      this.web.add(event);
-      this.web.remove();
+    return of(this.web.add(event)).pipe(
+      delay(2000),
+      tap(() => this.web.remove())
+    )
     }
-    return of(source);
-  }
 
   private handleEventInQueue(event: LoopEvent) {
-    const source = () => {
-      this.queue.enqueue(event);
-      this.queue.dequeue();
+    return of(this.queue.enqueue(event)).pipe(
+      delay(2000),
+      tap(() => this.queue.dequeue())
+    )
     }
-    return of(source);
   }
-}
