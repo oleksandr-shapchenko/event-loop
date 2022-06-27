@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { of, switchMap } from 'rxjs';
+import { delay, Observable, of, switchMap, tap } from 'rxjs';
 
 import { LoopEvent } from '../common/interfaces';
 import { Queue } from '../structures/queue/queue';
@@ -14,49 +14,45 @@ export class LoopService {
   public stack = new Stack();
   public web = new WebApi();
   public queue = new Queue();
-
-  public handleSyncEvent(event: LoopEvent) {
-    const sourse = () => {
-      this.stack.push(event);
-      this.stack.pop();
+  
+  public handleSyncEvent(event: LoopEvent): Observable<LoopEvent[]> {
+    return of(this.stack.push(event)).pipe(
+      delay(3500),
+      tap(() => this.stack.pop())
+      )
     }
-    return of(sourse);
-  }
-
-  public handleAsyncEvent(event: LoopEvent) {
-    return this.handleAsyncInStack(event).pipe(
+    
+  public handleAsyncEvent(event: LoopEvent): Observable<LoopEvent[]> {
+    return this.placeAsyncInStack(event).pipe(
       switchMap(() => {
-        return this.handleEventInWebApi(event);
+        return this.placeEventInWebApi(event);
       }),
-        switchMap(() => {
-          return this.handleEventInQueue(event);
-        }),
-          switchMap(() => {
-          return this.handleAsyncInStack(event);
-        }))
-      }
-      
-    private handleAsyncInStack(event: LoopEvent) {
-      const source = () => {
-        this.stack.push(event);
-        this.stack.pop();
-      }
-      return of(source)
+      switchMap(() => {
+        return this.placeEventInQueue(event);
+      }),
+      switchMap(() => {
+        return this.placeAsyncInStack(event);
+      }))
     }
-
-  private handleEventInWebApi(event: LoopEvent) {
-    const source = () => {
-      this.web.add(event);
-      this.web.remove();
+    
+  private placeAsyncInStack(event: LoopEvent): Observable<LoopEvent[]> {
+    return of(this.stack.push(event)).pipe(
+      delay(1000),
+      tap(() => this.stack.pop())
+      )
     }
-    return of(source);
+    
+  private placeEventInWebApi(event: LoopEvent): Observable<LoopEvent[]> {
+    return of(this.web.add(event)).pipe(
+      delay(2000),
+      tap(() => this.web.remove())
+      )
+    }
+    
+  private placeEventInQueue(event: LoopEvent): Observable<LoopEvent[]> {
+    return of(this.queue.enqueue(event)).pipe(
+      delay(2000),
+      tap(() => this.queue.dequeue())
+      )
+    }
   }
-
-  private handleEventInQueue(event: LoopEvent) {
-    const source = () => {
-      this.queue.enqueue(event);
-      this.queue.dequeue();
-    }
-    return of(source);
-  }
-}
