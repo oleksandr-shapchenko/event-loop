@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { delay, iif, Observable, of, switchMap, tap } from 'rxjs';
+import { delay, iif, Observable, of, switchMap, tap, timer } from 'rxjs';
 
 import { LoopEvent } from '../common/interfaces';
 import { Queue } from '../structures/queue/queue';
@@ -21,18 +21,19 @@ export class LoopService {
       tap(() => this.stack.pop())
     )
   }
-    
+  
   public handleAsyncEvent(event: LoopEvent): Observable<LoopEvent[]> {
     return this.placeAsyncInStack(event).pipe(
       switchMap(() => this.placeEventInWebApi(event)),
       switchMap(() => this.placeEventInQueue(event)),
       switchMap(() => this.placeAsyncInStack(event)
-      ))
-    }    
+      )
+    )
+  }
     
   private placeAsyncInStack(event: LoopEvent): Observable<LoopEvent[]> {
-      return of(        
-        this.stack.push(event)).pipe(
+    return of(
+      this.stack.push(event)).pipe(
         delay(1000),
         tap(() => this.stack.pop())
       )
@@ -45,22 +46,20 @@ export class LoopService {
     )
   }
     
-  private placeEventInQueue(event: LoopEvent): Observable<LoopEvent[]> {
+  private placeEventInQueue(event: LoopEvent): Observable<0 | boolean> {
     return of(this.queue.enqueue(event)).pipe(
-      delay(2000),
-      tap(
-        this.stack.сollectionEmpty.pipe(
-          switchMap(() => {
-            return iif(() => true,
-            of(this.queue.dequeue()),
-            of(this.stack.сollectionEmpty.subscribe((res) => {
-
-            })
-            ))
-          })
-        )
-      ))
-    }
+      switchMap(() => iif(() => this.stack.collection.length === 0,
+        timer(2000).pipe(tap(() => this.queue.dequeue())),
+        this.stack.сollectionEmpty.asObservable().pipe(
+          delay(2000),
+          tap(() => this.stack.pop())
+        ))
+      )
+    )
   }
+}
 
 
+  
+
+  

@@ -9,6 +9,7 @@ export class Queue {
   }
   
   public dequeue() {
-   return this.collection.shift();
+    this.collection.shift();
+    return this.collection;
   }
 }
