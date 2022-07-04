@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { delay, delayWhen, filter, finalize, iif, map, mergeMap, Observable, of, pipe, retryWhen, switchMap, take, takeUntil, tap } from 'rxjs';
+import { delay, iif, Observable, of, switchMap, tap } from 'rxjs';
 
 import { LoopEvent } from '../common/interfaces';
 import { Queue } from '../structures/queue/queue';
@@ -52,13 +52,12 @@ export class LoopService {
         this.stack.сollectionEmpty.pipe(
           switchMap(() => {
             return iif(() => true,
-              of(this.queue.dequeue()),
-              of(this.stack.сollectionEmpty.subscribe((res) => { 
-                
-              }))
-            );
-          }
-          )
+            of(this.queue.dequeue()),
+            of(this.stack.сollectionEmpty.subscribe((res) => {
+
+            })
+            ))
+          })
         )
       ))
     }
