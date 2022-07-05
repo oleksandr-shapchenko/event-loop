@@ -3,16 +3,16 @@ import { LoopEvent } from 'src/app/common/interfaces';
 
 export class Stack {
   public collection: Array<LoopEvent> = [];
-  сollectionEmpty: Subject<boolean> = new Subject<boolean>();
-  
-  public push(el: LoopEvent) {
+  public сollectionEmpty: Subject<boolean> = new Subject<boolean>();
+
+  public push(el: LoopEvent): LoopEvent[] {
     this.collection.unshift(el);
     return this.collection;
   }
-  
-  public pop() {
+
+  public pop(): LoopEvent[] {
     this.collection.pop();
-    if(!this.collection.length) {
+    if (!this.collection.length) {
       this.сollectionEmpty.next(true);
     }
     return this.collection;
